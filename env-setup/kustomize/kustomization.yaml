@@ -44,4 +44,3 @@ configMapGenerator:
 - envs:
   - configs.env
   name: triton-configs
-
