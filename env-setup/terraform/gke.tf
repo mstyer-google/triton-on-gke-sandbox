@@ -27,7 +27,7 @@ module "gke" {
   project_id                 = data.google_project.project.project_id
   name                       = var.cluster_name
   release_channel            = var.gke_release_channel
-  regional                   = false 
+  regional                   = false
   zones                      = [var.zone]
   network                    = google_compute_network.cluster_network.name
   subnetwork                 = google_compute_subnetwork.cluster_subnetwork.name
@@ -39,12 +39,13 @@ module "gke" {
   network_policy             = false
   horizontal_pod_autoscaling = true
   filestore_csi_driver       = false
-  create_service_account     = true 
-  grant_registry_access      = true  
-  identity_namespace         = "${data.google_project.project.project_id}.svc.id.goog" 
+  create_service_account     = true
+  grant_registry_access      = true
+  identity_namespace         = "${data.google_project.project.project_id}.svc.id.goog"
+  deletion_protection        = false
 
-  monitoring_enable_managed_prometheus = true 
-  
+  monitoring_enable_managed_prometheus = true
+
   cluster_resource_labels = { "mesh_id" : "proj-${data.google_project.project.number}" }
 
   node_pools = [
@@ -52,7 +53,7 @@ module "gke" {
       name                      = "cpu-node-pool"
       machine_type              = "e2-medium"
       node_locations            = var.zone
-      min_count                 = var.default_pool_node_count 
+      min_count                 = var.default_pool_node_count
       max_count                 = var.default_pool_node_count
       local_ssd_count           = 0
       spot                      = false
@@ -66,8 +67,8 @@ module "gke" {
       preemptible               = false
     },
     {
-      name                      = "triton-node-pool" 
-      machine_type              = var.machine_type 
+      name                      = "triton-node-pool"
+      machine_type              = var.machine_type
       accelerator_type          = var.accelerator_type
       accelerator_count         = var.accelerator_count
       node_locations            = var.zone
@@ -93,7 +94,7 @@ module "gke" {
     ]
 
     triton-node-pool = [
-        "https://www.googleapis.com/auth/cloud-platform", 
+        "https://www.googleapis.com/auth/cloud-platform",
     ]
   }
 
@@ -133,8 +134,8 @@ resource "kubernetes_namespace" "triton_namespace" {
 module "triton_workload_identity" {
   source       = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
   project_id   = data.google_project.project.project_id
-  name         = var.triton_sa_name 
-  namespace    = kubernetes_namespace.triton_namespace.metadata[0].name 
+  name         = var.triton_sa_name
+  namespace    = kubernetes_namespace.triton_namespace.metadata[0].name
   roles        = var.triton_sa_roles
 }
 
@@ -146,7 +147,7 @@ module "asm" {
   cluster_location          = module.gke.location
   enable_cni                = false
   enable_fleet_registration = true
-  enable_mesh_feature       = false 
+  enable_mesh_feature       = false
   channel                   = var.asm_release_channel
 }
 

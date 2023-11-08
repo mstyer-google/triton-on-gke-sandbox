@@ -20,7 +20,7 @@ steps:
     args:
       - -c
       - |
-          git clone https://github.com/jarokaz/triton-on-gke-sandbox.git /workspace/triton-on-gke-sandbox
+          git clone https://github.com/mstyer-google/triton-on-gke-sandbox.git /workspace/triton-on-gke-sandbox
           echo project_id=$PROJECT_ID
           echo region=$_REGION
           echo zone=$_ZONE
