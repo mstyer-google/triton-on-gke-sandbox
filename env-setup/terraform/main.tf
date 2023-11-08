@@ -14,10 +14,10 @@
 
 
 terraform {
-  required_version = ">= 0.14"
-  required_providers {
-    google = "~> 4.15"
-  }
+#  required_version = ">= 0.14"
+#  required_providers {
+#    google = "~> 4.15"
+#  }
 
   backend "gcs" {}
 }
