@@ -16,6 +16,6 @@ spec:
         averageUtilization: 80
   minReplicas: 3
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: apps/v2
     kind: Deployment
     name: istio-ingressgateway
