@@ -158,7 +158,8 @@ steps:
           ksa=${_TRITON_SA_NAME}
           EOF
           kustomize edit set namespace $_TRITON_NAMESPACE
-          kustomize edit set  image "nvcr.io/nvidia/tritonserver:22.01-py3=nvcr.io/nvidia/tritonserver:22.01-py3"
+          #kustomize edit set image "nvcr.io/nvidia/tritonserver:22.01-py3=nvcr.io/nvidia/tritonserver:22.01-py3"
+          kustomize edit set image "nvcr.io/nvidia/tritonserver:23.10-trtllm-python-py3=nvcr.io/nvidia/tritonserver:23.10-trtllm-python-py3"
           kubectl kustomize ./
           kubectl apply -k ./
           kubectl wait pods --for=jsonpath='{.status.phase}'=Running -n $_TRITON_NAMESPACE $(kubectl get pod --selector="app=triton-server" -n $_TRITON_NAMESPACE --output jsonpath='{.items[0].metadata.name}') --timeout=600s
